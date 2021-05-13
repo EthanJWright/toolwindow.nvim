@@ -2,7 +2,7 @@ local Terminal = nil
 local Trouble = nil
 local Todo = nil
 local Windows = {}
-local watchexec = require('toolwindow.validate')
+local autobuild = require('toolwindow.validate')
 local api = vim.api
 
 local function standard_close(plugin)
@@ -36,9 +36,9 @@ local function validate_trouble()
     end
 end
 
-local function open_watchexecterm(plugin, args)
+local function open_autobuild(plugin, args)
     validate_toggleterm()
-    watchexec.validate()
+    autobuild.validate()
     if plugin == nil then
         plugin = Terminal:new({
             cmd = "watchexec --clear -e " .. args.filetype .. ' "clear ; '.. args.cmd .. '"',
@@ -133,7 +133,7 @@ end
 -- register default utilities
 
 local function register_builtin()
-      register("watchexecterm", nil, term_close, open_watchexecterm)
+      register("autobuild", nil, term_close, open_autobuild)
       register("term", nil, term_close, open_term)
       register("trouble", nil, standard_close, trouble_open)
       register("todo", nil, standard_close, todo_open)

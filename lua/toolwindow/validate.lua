@@ -3,7 +3,7 @@ local M = {}
 
 function M.validate()
   if vim.fn.executable("watchexec") == 0 then
-    api.nvim_err_writeln("watchexec is not installed. Call :WatchexecInstall to install it\n")
+    api.nvim_err_writeln("Autobuild tools not installed. Call :AutobuildInstall to install.\n")
     return false
   end
   return true
@@ -49,7 +49,7 @@ function M.download_watchexec()
 end
 
 function M.create_commands()
-  vim.cmd("command! WatchexecInstall :lua require('toolwindow.validate').download_watchexec()")
+  vim.cmd("command! AutobuildInstall :lua require('toolwindow.validate').download_watchexec()")
 end
 
 return M
