@@ -2,6 +2,13 @@
 
 Easy management of a toolwindow.
 
+## Requirements
+
+- Neovim >= 0.5.0 for lua support
+- [watchexec](https://github.com/watchexec/watchexec) if you want live test execution
+- [trouble.nvim](https://github.com/folke/trouble.nvim) for a diagnostics window
+- [nvim-toggleterm.lua]( https://github.com/akinsho/nvim-toggleterm.lua ) for a terminal and watchexec support.
+
 ## Installation
 
 Toolwindow includes a file watcher that can be used to execute tests. If you
