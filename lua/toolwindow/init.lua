@@ -1,3 +1,3 @@
-local Windows = require("toolwindow.window")
+local Windows = require("toolwindow.windows")
 
 return Windows
