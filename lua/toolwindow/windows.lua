@@ -17,12 +17,12 @@ end
 
 local function open_watchexecterm(plugin, args)
     if plugin == nil then
-      plugin = Terminal:new({
-          cmd = "watchexec --clear -e " .. args.filetype .. ' "clear ; '.. args.cmd .. '"',
-          hidden = true,
-      })
+        plugin = Terminal:new({
+            cmd = "watchexec --clear -e " .. args.filetype .. ' "clear ; '.. args.cmd .. '"',
+        })
+    else
+        plugin:open()
     end
-    plugin:open()
     return plugin
 end
 
@@ -30,14 +30,16 @@ end
 local function open_term(plugin, args)
     _ = args
     if plugin == nil then
-      plugin = Terminal:new({
-          hidden = true,
-          on_close = function(term)
-              vim.cmd("Closing terminal")
-          end,
-      })
+        plugin = Terminal:new({
+            hidden = true,
+            on_exit = function(job, data, name)
+                _, _, _ = job, data, name
+                vim.cmd("echo exited")
+            end,
+        })
+    else
+        plugin:open()
     end
-    plugin:open()
     return plugin
 end
 
@@ -46,6 +48,7 @@ local function term_close(plugin)
     if plugin:is_open() then
         plugin:close()
     end
+    return
 end
 
 
