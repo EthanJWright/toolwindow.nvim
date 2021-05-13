@@ -11,7 +11,7 @@ want to utilize the `watchexecterm` feature you should install watchexec.
 cargo install watchexec-cli
 ```
 
-The plugin uses (trouble.nvim)[https://github.com/folke/trouble.nvim] as a diagnostic tool and (nvim-toggleterm.lua)[https://github.com/akinsho/nvim-toggleterm.lua] to add live test execution and an intractable terminal to the tool window.
+The plugin uses [ trouble.nvim ]( https://github.com/folke/trouble.nvim ) as a diagnostic tool and [ nvim-toggleterm.lua ]( https://github.com/akinsho/nvim-toggleterm.lua ) to add live test execution and an intractable terminal to the tool window.
 
 ```sh
 Plug 'folke/trouble.nvim'
