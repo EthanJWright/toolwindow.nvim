@@ -1,6 +1,6 @@
 local Terminal  = require('toggleterm.terminal').Terminal
 local Windows = {}
-local validate = require('toggleterm.validate')
+local validate = require('toolwindow.validate')
 
 validate.validate()
 
