@@ -48,7 +48,7 @@ function M.download_watchexec()
 end
 
 function M.create_commands()
-  vim.cmd("command! WatchexecInstall :lua require('validate').download_watchexec()")
+  vim.cmd("command! WatchexecInstall :lua require('toolwindow.validate').download_watchexec()")
 end
 
 return M
