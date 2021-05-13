@@ -47,6 +47,7 @@ autocmd FileType python nnoremap <Leader>bl :lua require("toolwindow").open_wind
 A standard terminal
 
 ```lua
+local Terminal  = require('toggleterm.terminal').Terminal
 local windows = require("toolwindow")
 local function open_fn(plugin, args)
     _ = args
@@ -64,6 +65,7 @@ windows.register("term", Terminal:new({hidden = true}), close_fn, open_fn)
 A silly example, cowsay
 
 ```lua
+local Terminal  = require('toggleterm.terminal').Terminal
 local windows = require("toolwindow")
 local function cowsay_open(plugin, args)
     _ = args
