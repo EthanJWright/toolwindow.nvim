@@ -44,6 +44,16 @@ autocmd FileType python nnoremap <Leader>bl :lua require("toolwindow").open_wind
 
 ### Register your own tools to be managed
 
+Note: the following examples are in lua, if you are adding them to your
+init.vim wrap them in:
+
+```
+lua << EOF
+-- lua here
+EOF
+```
+
+
 A standard terminal
 
 ```lua
