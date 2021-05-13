@@ -6,8 +6,8 @@ Easy management of a toolwindow.
 
 * Manage toolwindow with builtin support for tools:
     - Run code on save
-    - View diagnostics
-    - Launch terminal
+    - View diagnostics with [trouble](https://github.com/folke/trouble.nvim)
+    - Launch terminal with [toggleterm](https://github.com/akinsho/nvim-toggleterm.lua)
 * Load custom tool windows to manage
 * Configure auto code run per file type
 
