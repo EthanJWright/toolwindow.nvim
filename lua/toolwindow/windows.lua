@@ -1,5 +1,5 @@
 local Terminal  = require('toggleterm.terminal').Terminal
-Windows = {}
+local Windows = {}
 
 
 local function standard_close(plugin)
