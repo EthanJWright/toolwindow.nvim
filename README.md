@@ -2,6 +2,10 @@
 
 Easy management of a toolwindow.
 
+There are many great plugins being developed that are toggled to occupy the
+toolwindow space in neovim. Individually each is great, but managing opening
+and closing them with keybinds can be tedious. Here is a fix.
+
 ## ✨ Features
 
 * Manage toolwindow with builtin support for tools:
