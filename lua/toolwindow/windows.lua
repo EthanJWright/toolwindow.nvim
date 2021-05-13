@@ -19,10 +19,10 @@ local function open_watchexecterm(plugin, args)
     if plugin == nil then
         plugin = Terminal:new({
             cmd = "watchexec --clear -e " .. args.filetype .. ' "clear ; '.. args.cmd .. '"',
+            hidden = true,
         })
-    else
-        plugin:open()
     end
+    plugin:open()
     return plugin
 end
 
