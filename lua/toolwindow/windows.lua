@@ -10,6 +10,7 @@ local function standard_close(plugin)
 end
 
 local function get_tool(name, plugin, close_fn, open_fn)
+    -- TODO fix later
     return {
         plugin = plugin,
         name = name,
@@ -77,10 +78,10 @@ local function trouble_open(plugin, args)
     _ = args
     validate_trouble()
     if plugin == nil then
-        Trouble.open()
+        Trouble.open("lsp_workspace_diagnostics")
         return Trouble
     else
-        plugin.open()
+        plugin.open("lsp_workspace_diagnostics")
     end
 end
 
