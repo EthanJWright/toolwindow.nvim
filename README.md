@@ -14,6 +14,10 @@ Easy management of a toolwindow.
 Toolwindow includes a file watcher that can be used to execute tests. If you
 want to utilize the `watchexecterm` feature you should install watchexec.
 
+Install using the plugin with `:WatchexecInstall`
+
+or
+
 ```sh
 cargo install watchexec-cli
 ```

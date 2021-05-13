@@ -1,5 +1,8 @@
 local Terminal  = require('toggleterm.terminal').Terminal
 local Windows = {}
+local validate = require('toolwindow.validate')
+
+validate.validate()
 
 
 local function standard_close(plugin)
