@@ -6,13 +6,6 @@ local function standard_close(plugin)
     plugin.close()
 end
 
-local function term_close(plugin)
-    if plugin == nil then return end
-    if plugin:is_open() then
-        plugin:close()
-    end
-end
-
 local function get_tool(name, plugin, close_fn, open_fn)
     return {
         plugin = plugin,
@@ -39,11 +32,22 @@ local function open_term(plugin, args)
     if plugin == nil then
       plugin = Terminal:new({
           hidden = true,
+          on_close = function(term)
+              vim.cmd("Closing terminal")
+          end,
       })
     end
     plugin:open()
     return plugin
 end
+
+local function term_close(plugin)
+    if plugin == nil then return end
+    if plugin:is_open() then
+        plugin:close()
+    end
+end
+
 
 local function standard_open(plugin, args)
     _ = args
