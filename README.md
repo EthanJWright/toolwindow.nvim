@@ -42,6 +42,13 @@ Configure live test execution per language
 autocmd FileType python nnoremap <Leader>bl :lua require("toolwindow").open_window("watchexecterm", {filetype = "py", cmd = "pytest"})<CR>
 ```
 
+### Plugin API
+
+
+- open_window(name, args) - open a registered window, pass a table of args to the open function
+- close() - close current open window if any is open
+- register(name, plugin, close_fn, open_fn) - register a new window manager to be tracked
+
 ### Register your own tools to be managed
 
 Note: the following examples are in lua, if you are adding them to your
