@@ -18,16 +18,16 @@ and closing them with keybinds can be tedious. Here is a fix.
 ## Requirements
 
 - Neovim >= 0.5.0 for lua support
-- [watchexec](https://github.com/watchexec/watchexec) if you want live test execution
+- [watchexec](https://github.com/watchexec/watchexec) supports autobuild feature
 - [trouble.nvim](https://github.com/folke/trouble.nvim) for a diagnostics window
-- [nvim-toggleterm.lua]( https://github.com/akinsho/nvim-toggleterm.lua ) for a terminal and watchexec support.
+- [nvim-toggleterm.lua]( https://github.com/akinsho/nvim-toggleterm.lua ) for a terminal and autobuild support.
 
 ## 📦 Installation
 
-Toolwindow includes a file watcher that can be used to execute tests. If you
-want to utilize the `watchexecterm` feature you should install watchexec.
+Toolwindow includes an autobuild feature that can be used to execute tests. If you
+want to utilize the `autobuild` feature you should install the dependencies.
 
-Install using the plugin with `:WatchexecInstall`
+Install using the plugin with `:AutobuildInstall`
 
 or
 
@@ -67,21 +67,26 @@ nmap <silent><Leader>bn :lua require("toolwindow").open_window("todo", nil)<CR>
 Configure live test execution per language
 
 ```vim
-autocmd FileType python nnoremap <Leader>bl :lua require("toolwindow").open_window("watchexecterm", {filetype = "py", cmd = "pytest"})<CR>
+autocmd FileType python nnoremap <Leader>bl :lua require("toolwindow").open_window("autobuild", {filetype = "py", cmd = "pytest"})<CR>
 ```
 
 Open live test, leave window after
 
 ```vim
-autocmd FileType python nnoremap <Leader>bl :lua require("toolwindow").open_window("watchexecterm", {filetype = "py", cmd = "pytest"})<CR><C-\><C-n>G<C-W><C-K><C-W><C-L>
+autocmd FileType python nnoremap <Leader>bl :lua require("toolwindow").open_window("autobuild", {filetype = "py", cmd = "pytest"})<CR><C-\><C-n>G<C-W><C-K><C-W><C-L>
 ```
 
 ### Plugin API
 
+`open_fn(plugin, args)` - this is called by the toolwindow to open the given tool. A reference to the plugin is passed, as well as the arg table that was passed on the open_window call
 
-- open_window(name, args) - open a registered window, pass a table of args to the open function
-- close() - close current open window if any is open
-- register(name, plugin, close_fn, open_fn) - register a new window manager to be tracked
+`close_fn(plugin)` - this is called by the toolwindow to close the given tool. A reference to the tool plugin is passed.
+
+
+
+- `open_window(name, args)` - open a registered window, pass a table of args to the open function
+- `close()` - close current open window if any is open
+- `register(name, plugin, close_fn, open_fn)` - register a new window manager to be tracked
 
 ### Register your own tools to be managed
 
