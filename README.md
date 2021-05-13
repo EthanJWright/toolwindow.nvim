@@ -93,7 +93,7 @@ local function open_fn(plugin, args)
 end
 
 local function close_fn(plugin)
-    plugin.close()
+    plugin:close()
 end
 
 -- params: name, plugin, function to close window, function to open window
@@ -111,8 +111,9 @@ local function cowsay_open(plugin, args)
       plugin = Terminal:new({
           cmd = "fortune | cowsay",
           hidden = true,
-          on_close = function(term)
-              vim.cmd("Ending cowsay...")
+          on_exit = function(job, data, name)
+              _, _, _ = job, data, name
+              vim.cmd("echo finished cowsay")
           end,
       })
     end
