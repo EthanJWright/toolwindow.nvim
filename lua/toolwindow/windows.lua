@@ -1,9 +1,6 @@
-local Terminal  = require('toggleterm.terminal').Terminal
+local Terminal = nil
 local Windows = {}
-local validate = require('toolwindow.validate')
-
-validate.validate()
-
+local watchexec = require('toolwindow.validate')
 
 local function standard_close(plugin)
     plugin.close()
@@ -18,7 +15,15 @@ local function get_tool(name, plugin, close_fn, open_fn)
     }
 end
 
+local function validate_toggleterm()
+    if Terminal == nil then
+        Terminal = require('toggleterm.terminal').Terminal
+    end
+end
+
 local function open_watchexecterm(plugin, args)
+    validate_toggleterm()
+    watchexec.validate()
     if plugin == nil then
         plugin = Terminal:new({
             cmd = "watchexec --clear -e " .. args.filetype .. ' "clear ; '.. args.cmd .. '"',
@@ -32,6 +37,7 @@ end
 
 local function open_term(plugin, args)
     _ = args
+    validate_toggleterm()
     if plugin == nil then
         plugin = Terminal:new({
             hidden = true,
