@@ -1,4 +1,5 @@
 local Terminal = nil
+local Trouble = nil
 local Windows = {}
 local watchexec = require('toolwindow.validate')
 
@@ -18,6 +19,12 @@ end
 local function validate_toggleterm()
     if Terminal == nil then
         Terminal = require('toggleterm.terminal').Terminal
+    end
+end
+
+local function validate_trouble()
+    if Trouble == nil then
+        Trouble = require("trouble")
     end
 end
 
@@ -60,9 +67,15 @@ local function term_close(plugin)
 end
 
 
-local function standard_open(plugin, args)
+local function trouble_open(plugin, args)
     _ = args
-    plugin.open()
+    validate_trouble()
+    if plugin == nil then
+        Trouble.open()
+        return Trouble
+    else
+        plugin.open()
+    end
 end
 
 
@@ -97,7 +110,7 @@ end
 local function register_builtin()
       register("watchexecterm", nil, term_close, open_watchexecterm)
       register("term", nil, term_close, open_term)
-      register("trouble", require("trouble"), standard_close, standard_open)
+      register("trouble", nil, standard_close, trouble_open)
 end
 register_builtin()
 
