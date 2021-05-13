@@ -63,6 +63,12 @@ Configure live test execution per language
 autocmd FileType python nnoremap <Leader>bl :lua require("toolwindow").open_window("watchexecterm", {filetype = "py", cmd = "pytest"})<CR>
 ```
 
+Open live test, leave window after
+
+```vim
+autocmd FileType python nnoremap <Leader>bl :lua require("toolwindow").open_window("watchexecterm", {filetype = "py", cmd = "pytest"})<CR><C-\><C-n>G<C-W><C-K><C-W><C-L>
+```
+
 ### Plugin API
 
 
