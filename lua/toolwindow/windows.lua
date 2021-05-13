@@ -1,9 +1,9 @@
-local Terminal  = require('toggleterm.terminal').Terminal
+local Terminal = nil
+local Trouble = nil
+local Todo = nil
 local Windows = {}
-local validate = require('toolwindow.validate')
-
-validate.validate()
-
+local watchexec = require('toolwindow.validate')
+local api = vim.api
 
 local function standard_close(plugin)
     plugin.close()
@@ -18,7 +18,27 @@ local function get_tool(name, plugin, close_fn, open_fn)
     }
 end
 
+local function validate_toggleterm()
+    if Terminal == nil then
+        Terminal = require('toggleterm.terminal').Terminal
+        if Terminal == nil then
+            api.nvim_err_writeln("toggleterm plugin not installed!")
+        end
+    end
+end
+
+local function validate_trouble()
+    if Trouble == nil then
+        Trouble = require("trouble")
+        if Trouble == nil then
+            api.nvim_err_writeln("trouble.nvim not installed!")
+        end
+    end
+end
+
 local function open_watchexecterm(plugin, args)
+    validate_toggleterm()
+    watchexec.validate()
     if plugin == nil then
         plugin = Terminal:new({
             cmd = "watchexec --clear -e " .. args.filetype .. ' "clear ; '.. args.cmd .. '"',
@@ -29,9 +49,9 @@ local function open_watchexecterm(plugin, args)
     return plugin
 end
 
-
 local function open_term(plugin, args)
     _ = args
+    validate_toggleterm()
     if plugin == nil then
         plugin = Terminal:new({
             hidden = true,
@@ -53,13 +73,37 @@ local function term_close(plugin)
     return
 end
 
-
-local function standard_open(plugin, args)
+local function trouble_open(plugin, args)
     _ = args
-    plugin.open()
+    validate_trouble()
+    if plugin == nil then
+        Trouble.open()
+        return Trouble
+    else
+        plugin.open()
+    end
 end
 
+local function validate_todo()
+    if Todo == nil then
+        Todo = require("todo-comments")
+        if Todo == nil then
+            api.nvim_err_writeln("todo-comments.nvim not installed!")
+        end
+    end
+end
 
+local function todo_open(plugin, args)
+    _ = args
+    validate_trouble()
+    validate_todo()
+    if plugin == nil then
+        Trouble.open("todo")
+        return Trouble
+    else
+        plugin.open("todo")
+    end
+end
 
 -- Public Methods
 
@@ -86,13 +130,15 @@ local function register(name, plugin, close_fn, open_fn)
     end
 end
 
-
 -- register default utilities
+
 local function register_builtin()
       register("watchexecterm", nil, term_close, open_watchexecterm)
       register("term", nil, term_close, open_term)
-      register("trouble", require("trouble"), standard_close, standard_open)
+      register("trouble", nil, standard_close, trouble_open)
+      register("todo", nil, standard_close, todo_open)
 end
+
 register_builtin()
 
 return {

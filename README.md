@@ -53,8 +53,15 @@ Configure closing the toolwindow, opening trouble, or opening a window.
 
 ```vim
 nmap <silent><Leader>bc :lua require("toolwindow").close()<CR>
-nmap <silent><Leader>bd :lua require("toolwindow").open_window("trouble", nil)<CR>
+
+" use akinsho/nvim-toggleterm.lua
 nmap <silent><Leader>bt :lua require("toolwindow").open_window("term", nil)<CR>
+
+" use folke/trouble.nvim
+nmap <silent><Leader>bd :lua require("toolwindow").open_window("trouble", nil)<CR>
+
+" use folke/todo-comments.nvim
+nmap <silent><Leader>bn :lua require("toolwindow").open_window("todo", nil)<CR>
 ```
 
 Configure live test execution per language
