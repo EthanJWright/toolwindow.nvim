@@ -79,6 +79,7 @@ autocmd FileType python nnoremap <Leader>bl :lua require("toolwindow").open_wind
 ### Plugin API
 
 `open_fn(plugin, args)` - this is called by the toolwindow to open the given tool. A reference to the plugin is passed, as well as the arg table that was passed on the open_window call
+
 `close_fn(plugin)` - this is called by the toolwindow to close the given tool. A reference to the tool plugin is passed.
 
 
