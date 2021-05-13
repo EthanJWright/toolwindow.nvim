@@ -37,9 +37,8 @@ local function open_term(plugin, args)
                 vim.cmd("echo exited")
             end,
         })
-    else
-        plugin:open()
     end
+    plugin:open()
     return plugin
 end
 
