@@ -41,3 +41,51 @@ Configure live test execution per language
 ```
 autocmd FileType python nnoremap <Leader>bl :lua require("toolwindow").open_window("watchexecterm", {filetype = "py", cmd = "pytest"})<CR>
 ```
+
+### Register your own tools to be managed
+
+A standard terminal
+
+```lua
+local windows = require("toolwindow")
+local function open_fn(plugin, args)
+    _ = args
+    plugin:open()
+end
+
+local function close_fn(plugin)
+    plugin.close()
+end
+
+-- params: name, plugin, function to close window, function to open window
+windows.register("term", Terminal:new({hidden = true}), close_fn, open_fn)
+```
+
+A silly example, cowsay
+
+```lua
+local windows = require("toolwindow")
+local function cowsay_open(plugin, args)
+    _ = args
+    if plugin == nil then
+      plugin = Terminal:new({
+          cmd = "fortune | cowsay",
+          hidden = true,
+          on_close = function(term)
+              vim.cmd("Ending cowsay...")
+          end,
+      })
+    end
+    plugin:open()
+    return plugin
+end
+
+local function cowsay_close(plugin)
+    if plugin:is_open() then
+        plugin:close()
+    end
+end
+
+-- Plugin is nil here as the terminal will be created on each open
+windows.register("cowsay", nil, cowsay_close, cowsay_open)
+```

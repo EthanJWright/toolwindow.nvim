@@ -50,11 +50,15 @@ local function standard_open(plugin, args)
     plugin.open()
 end
 
+
+
 -- Public Methods
 
 local function close()
     for _, value in pairs(Windows) do
-        value.close_fn(value.plugin)
+        if value.plugin ~= nil then
+            value.close_fn(value.plugin)
+        end
     end
 end
 
