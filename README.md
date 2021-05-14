@@ -17,10 +17,6 @@ and closing them with keybinds can be tedious. Here is a fix.
 
 ### Screenshots
 
-Demo
-
-![](./screenshots/demo.gif)
-
 Automatically build your project
 
 ![](./screenshots/autobuild.png)
