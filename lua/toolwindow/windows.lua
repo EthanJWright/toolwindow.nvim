@@ -75,13 +75,15 @@ local function term_close(plugin)
 end
 
 local function trouble_open(plugin, args)
-    _ = args
+    if args == nil then
+        args = { mode = "lsp_workspace_diagnostics" }
+    end
     validate_trouble()
     if plugin == nil then
-        Trouble.open("lsp_workspace_diagnostics")
+        Trouble.open(args)
         return Trouble
     else
-        plugin.open("lsp_workspace_diagnostics")
+        plugin.open(args)
     end
 end
 
@@ -95,14 +97,16 @@ local function validate_todo()
 end
 
 local function todo_open(plugin, args)
-    _ = args
     validate_trouble()
     validate_todo()
+    if args == nil then
+        args = { mode = "todo" }
+    end
     if plugin == nil then
-        Trouble.open("todo")
+        Trouble.open(args)
         return Trouble
     else
-        plugin.open("todo")
+        plugin.open(args)
     end
 end
 
