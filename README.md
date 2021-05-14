@@ -15,6 +15,20 @@ and closing them with keybinds can be tedious. Here is a fix.
 * Load custom tool windows to manage
 * Configure auto code run per file type
 
+### Screenshots
+
+Automatically build your project
+
+![](./screenshots/autobuild.png)
+
+View comments in code
+
+![](./screenshots/todo-comments.png)
+
+Open a terminal
+
+![](./screenshots/toggleterm.png)
+
 ## Requirements
 
 - Neovim >= 0.5.0 for lua support
