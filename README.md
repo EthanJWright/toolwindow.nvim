@@ -12,6 +12,7 @@ and closing them with keybinds can be tedious. Here is a fix.
     - Run code on save
     - View diagnostics with [trouble](https://github.com/folke/trouble.nvim)
     - Launch terminal with [toggleterm](https://github.com/akinsho/nvim-toggleterm.lua)
+    - Toggle quickfix list
 * Load custom tool windows to manage
 * Configure auto code run per file type
 
@@ -71,6 +72,9 @@ Configure closing the toolwindow, opening trouble, or opening a window.
 
 ```vim
 nmap <silent><Leader>bc :lua require("toolwindow").close()<CR>
+
+" toggle quickfix list (:copen)
+nmap <silent><Leader>bt :lua require("toolwindow").open_window("quickfix", nil)<CR>
 
 " use akinsho/nvim-toggleterm.lua
 nmap <silent><Leader>bt :lua require("toolwindow").open_window("term", nil)<CR>

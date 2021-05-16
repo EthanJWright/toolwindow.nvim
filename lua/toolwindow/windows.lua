@@ -6,11 +6,12 @@ local autobuild = require('toolwindow.validate')
 local api = vim.api
 
 local function standard_close(plugin)
-    plugin.close()
+    if plugin ~= nil and plugin.close ~= nil then
+        plugin.close()
+    end
 end
 
 local function get_tool(name, plugin, close_fn, open_fn)
-    -- TODO fix later
     return {
         plugin = plugin,
         name = name,
@@ -67,11 +68,11 @@ local function open_term(plugin, args)
 end
 
 local function term_close(plugin)
-    if plugin == nil then return end
-    if plugin:is_open() then
-        plugin:close()
+    if plugin ~= nil and plugin.is_open ~= nil and plugin.close ~= nil then
+        if plugin:is_open() then
+            plugin:close()
+        end
     end
-    return
 end
 
 local function trouble_open(plugin, args)
@@ -110,12 +111,24 @@ local function todo_open(plugin, args)
     end
 end
 
+local function qf_open(plugin, args)
+    _, _ = plugin, args
+    vim.cmd("copen")
+end
+
+local function qf_close(plugin)
+    _ = plugin
+    vim.cmd("cclose")
+end
+
 -- Public Methods
 
 local function close()
     for _, value in pairs(Windows) do
         if value.plugin ~= nil then
             value.close_fn(value.plugin)
+        else
+            value.close_fn("")
         end
     end
 end
@@ -142,6 +155,7 @@ local function register_builtin()
       register("term", nil, term_close, open_term)
       register("trouble", nil, standard_close, trouble_open)
       register("todo", nil, standard_close, todo_open)
+      register("quickfix", nil, qf_close, qf_open)
 end
 
 register_builtin()
