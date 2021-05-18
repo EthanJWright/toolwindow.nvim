@@ -70,6 +70,8 @@ Plug 'ethanjwright/toolwindow.nvim'
 
 Configure closing the toolwindow, opening trouble, or opening a window.
 
+
+
 ```vim
 nmap <silent><Leader>bc :lua require("toolwindow").close()<CR>
 
@@ -92,10 +94,10 @@ Configure live test execution per language
 autocmd FileType python nnoremap <Leader>bl :lua require("toolwindow").open_window("autobuild", {filetype = "py", cmd = "pytest"})<CR>
 ```
 
-Open live test, leave window after
+Most calls will return you to your current window after running. To change this, set stay_after_open in the args
 
 ```vim
-autocmd FileType python nnoremap <Leader>bl :lua require("toolwindow").open_window("autobuild", {filetype = "py", cmd = "pytest"})<CR><C-\><C-n>G<C-W><C-K><C-W><C-L>
+nmap <silent><Leader>bd :lua require("toolwindow").open_window("trouble", {stay_stay_after_open = true})<CR>
 ```
 
 ### Plugin API

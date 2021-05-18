@@ -4,6 +4,7 @@ local Todo = nil
 local Windows = {}
 local autobuild = require('toolwindow.validate')
 local api = vim.api
+local parent = nil
 
 local function standard_close(plugin)
     if plugin ~= nil and plugin.close ~= nil then
@@ -29,12 +30,29 @@ local function validate_toggleterm()
     end
 end
 
-local function validate_trouble()
+local function has_trouble()
     if Trouble == nil then
         Trouble = require("trouble")
         if Trouble == nil then
-            api.nvim_err_writeln("trouble.nvim not installed!")
+            return false
         end
+    end
+    return true
+end
+
+local function validate_trouble()
+  if not has_trouble() then
+    api.nvim_err_writeln("trouble.nvim not installed!")
+  end
+end
+
+local function set_parent()
+  parent = vim.api.nvim_get_current_win()
+end
+
+local function goto_parent()
+    if parent and vim.api.nvim_win_is_valid(parent) then
+      vim.api.nvim_set_current_win(parent)
     end
 end
 
@@ -48,6 +66,10 @@ local function open_autobuild(plugin, args)
         })
     end
     plugin:open()
+    vim.cmd('stopinsert')
+    vim.cmd('normal! G')
+    goto_parent()
+    vim.cmd('stopinsert')
     return plugin
 end
 
@@ -76,15 +98,17 @@ local function term_close(plugin)
 end
 
 local function trouble_open(plugin, args)
-    if args == nil then
+    validate_trouble()
+    if args == nil or args.mode == nil then
         args = { mode = "lsp_workspace_diagnostics" }
     end
-    validate_trouble()
     if plugin == nil then
         Trouble.open(args)
+        goto_parent()
         return Trouble
     else
         plugin.open(args)
+        goto_parent()
     end
 end
 
@@ -100,20 +124,14 @@ end
 local function todo_open(plugin, args)
     validate_trouble()
     validate_todo()
-    if args == nil then
-        args = { mode = "todo" }
-    end
-    if plugin == nil then
-        Trouble.open(args)
-        return Trouble
-    else
-        plugin.open(args)
-    end
+    _ = args
+    return trouble_open(plugin, {mode = "todo"})
 end
 
 local function qf_open(plugin, args)
     _, _ = plugin, args
     vim.cmd("copen")
+    goto_parent()
 end
 
 local function qf_close(plugin)
@@ -134,6 +152,10 @@ local function close()
 end
 
 local function open_window(name, args)
+    if args ~= nil and args.stay_after_open ~= nil and args.stay_after_open then
+    else
+      set_parent()
+    end
     close()
     local update_plugin = Windows[name].open_fn(Windows[name].plugin, args)
     if update_plugin ~= nil then
