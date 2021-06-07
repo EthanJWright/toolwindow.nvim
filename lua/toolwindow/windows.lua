@@ -99,8 +99,8 @@ end
 
 local function trouble_open(plugin, args)
     validate_trouble()
-    if args == nil or args.mode == nil then
-        args = { mode = "lsp_workspace_diagnostics" }
+    if args == nil then
+        args = "lsp_workspace_diagnostics"
     end
     if plugin == nil then
         Trouble.open(args)
@@ -125,7 +125,7 @@ local function todo_open(plugin, args)
     validate_trouble()
     validate_todo()
     _ = args
-    return trouble_open(plugin, {mode = "todo"})
+    return trouble_open(plugin, "todo")
 end
 
 local function qf_open(plugin, args)
