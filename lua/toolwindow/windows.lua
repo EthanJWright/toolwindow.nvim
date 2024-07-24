@@ -100,7 +100,7 @@ end
 local function trouble_open(plugin, args)
     validate_trouble()
     if args == nil then
-        args = "lsp_workspace_diagnostics"
+        args = "workspace_diagnostics"
     end
     if plugin == nil then
         Trouble.open(args)
